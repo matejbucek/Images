@@ -102,22 +102,22 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="137.0" text="Generate Image" VBox.vgrow="ALWAYS">
+                        <Button contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="137.0" text="Generate Image" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="137.0" text="Restore Original Image">
+                        <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="53.0" prefWidth="137.0" text="Restore Original Image">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <RadioButton mnemonicParsing="false" text="Original Image">
+                        <RadioButton fx:id="originalImg" disable="true" mnemonicParsing="false" text="Original Image">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Modified Image">
+                        <RadioButton fx:id="modifiedImg" disable="true" mnemonicParsing="false" text="Modified Image">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +29,12 @@ public class PrimaryController implements Initializable{
 	
 	@FXML
 	private AnchorPane imageViewPane;
+	
+	@FXML
+	private RadioButton originalImg;
+	
+	@FXML
+	private RadioButton modifiedImg;
 	
 	private File file;
 
@@ -58,6 +65,11 @@ public class PrimaryController implements Initializable{
 		imageViewPane.widthProperty().addListener((obs, oldVal, newVal) -> {
 			image.setFitHeight(imageViewPane.getHeight() * 0.7);
 		});
+		
+		originalImg.setDisable(false);
+		modifiedImg.setDisable(false);
+		originalImg.setSelected(true);
+		
 	}
 	
 	public void save() throws IOException {
