@@ -10,14 +10,22 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable{
 	
@@ -70,6 +78,23 @@ public class PrimaryController implements Initializable{
 		modifiedImg.setDisable(false);
 		originalImg.setSelected(true);
 		
+	}
+	
+	public void about() {
+		TextFlow textFlow = new TextFlow();
+		textFlow.setLayoutX(40);
+		textFlow.setLayoutY(40);
+		Text text = new Text("Matěj Bucek V4A");
+		text.setFill(Color.BLACK);
+		text.setFont(Font.font("Arial", FontPosture.REGULAR, 14));
+		textFlow.getChildren().addAll(text);
+
+		Group group = new Group(textFlow);
+		Scene scene = new Scene(group, 500, 150, Color.WHITE);
+		var stage = new Stage();
+		stage.setTitle("About me");
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 	public void save() throws IOException {
