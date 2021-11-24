@@ -8,6 +8,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -69,7 +71,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Select Image File" VBox.vgrow="ALWAYS">
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#chooseFile" text="Select Image File" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -124,7 +126,11 @@
                   </VBox>
                </children>
             </GridPane>
-            <Canvas height="200.0" width="200.0" />
+            <AnchorPane fx:id="imageViewPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowSpan="3">
+               <children>
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="19.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
          </children>
       </GridPane>
    </children>
