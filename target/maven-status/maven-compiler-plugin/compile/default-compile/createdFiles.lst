@@ -1,3 +1,5 @@
 cz/mbucek/images/App.class
 cz/mbucek/images/PrimaryController.class
 cz/mbucek/images/utils/ImageUtils.class
+cz/mbucek/images/filters/Filter.class
+cz/mbucek/images/filters/Filters.class

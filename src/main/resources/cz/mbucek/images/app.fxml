@@ -85,7 +85,7 @@
 										<Insets top="10.0" />
 									</VBox.margin>
 								</Canvas>
-								<Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Apply Matrix Filter" VBox.vgrow="ALWAYS">
+								<Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Apply Matrix Filter" VBox.vgrow="ALWAYS" onAction="#applyFilter">
 									<VBox.margin>
 										<Insets top="10.0" />
 									</VBox.margin>

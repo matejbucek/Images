@@ -7,10 +7,13 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import cz.mbucek.images.filters.Filters;
 import cz.mbucek.images.utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +22,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +50,9 @@ public class PrimaryController implements Initializable{
 
 	@FXML
 	private ToggleGroup imageStatus;
+	
+	private Image originalImage;
+	private Image modifiedImage;
 
 	private File file;
 
@@ -54,7 +61,9 @@ public class PrimaryController implements Initializable{
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, 500, 500);
-		imageStatus = new ToggleGroup();
+		imageStatus.selectedToggleProperty().addListener(((observable, oldValue, newValue) -> {
+		    image.setImage((originalImg.isSelected())? originalImage : modifiedImage);
+		}));
 	}
 
 	public void close() {
@@ -67,7 +76,7 @@ public class PrimaryController implements Initializable{
 		if(selectedFile != null) {
 			file = selectedFile;
 			Image img = new Image(selectedFile.toURI().toString());
-			image.setImage(img);
+			originalImage = img;
 			image.setFitWidth(imageViewPane.getWidth() * 0.7);
 			image.setFitHeight(imageViewPane.getHeight() * 0.7);
 			
@@ -104,6 +113,12 @@ public class PrimaryController implements Initializable{
 			}
 		}
 		image.setImage(SwingFXUtils.toFXImage(buffImg, null));
+	}
+	
+	public void applyFilter() {
+		originalImage = image.getImage();
+		modifiedImage = SwingFXUtils.toFXImage(Filters.applyFilter(Filters::applyNegative, SwingFXUtils.fromFXImage(image.getImage(), null)), null);
+		modifiedImg.setSelected(true);
 	}
 
 	public void save() throws IOException {
