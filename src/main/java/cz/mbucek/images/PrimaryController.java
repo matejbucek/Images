@@ -1,19 +1,19 @@
 package cz.mbucek.images;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
+import cz.mbucek.images.filters.Filter;
+import cz.mbucek.images.filters.FilterName;
 import cz.mbucek.images.filters.Filters;
 import cz.mbucek.images.utils.ImageUtils;
-
-import java.awt.image.BufferedImage;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,8 +21,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,6 +52,9 @@ public class PrimaryController implements Initializable{
 	@FXML
 	private ToggleGroup imageStatus;
 	
+	@FXML
+	private Menu filters;
+	
 	private Image originalImage;
 	private Image modifiedImage;
 
@@ -64,6 +68,24 @@ public class PrimaryController implements Initializable{
 		imageStatus.selectedToggleProperty().addListener(((observable, oldValue, newValue) -> {
 		    image.setImage((originalImg.isSelected())? originalImage : modifiedImage);
 		}));
+		
+		var methods = Filters.class.getMethods();
+		Stream.of(methods).filter(m -> m.getAnnotation(FilterName.class) != null).forEach(m -> {
+			var item = new MenuItem(m.getAnnotation(FilterName.class).value());
+			item.setOnAction(event -> {
+				applyFilter((BufferedImage img) -> {
+					Object value = null;
+					try {
+						value = m.invoke(null, img);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						e.printStackTrace();
+					}
+					return (value instanceof BufferedImage)? (BufferedImage) value : null;
+				});
+			});
+			filters.getItems().add(item);
+		});
+		
 	}
 
 	public void close() {
@@ -115,9 +137,10 @@ public class PrimaryController implements Initializable{
 		image.setImage(SwingFXUtils.toFXImage(buffImg, null));
 	}
 	
-	public void applyFilter() {
+	private void applyFilter(Filter filter) {
 		originalImage = image.getImage();
-		modifiedImage = SwingFXUtils.toFXImage(Filters.applyFilter(Filters::applyNegative, SwingFXUtils.fromFXImage(image.getImage(), null)), null);
+		if(image == null) return;
+		modifiedImage = SwingFXUtils.toFXImage(Filters.applyFilter(filter, SwingFXUtils.fromFXImage(image.getImage(), null)), null);
 		modifiedImg.setSelected(true);
 	}
 

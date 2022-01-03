@@ -26,9 +26,8 @@
 						<MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
 					</items>
 				</Menu>
-				<Menu mnemonicParsing="false" text="Filters">
+				<Menu mnemonicParsing="false" text="Filters" fx:id="filters">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Delete" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="About">
@@ -85,7 +84,7 @@
 										<Insets top="10.0" />
 									</VBox.margin>
 								</Canvas>
-								<Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Apply Matrix Filter" VBox.vgrow="ALWAYS" onAction="#applyFilter">
+								<Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Apply Matrix Filter" VBox.vgrow="ALWAYS">
 									<VBox.margin>
 										<Insets top="10.0" />
 									</VBox.margin>
