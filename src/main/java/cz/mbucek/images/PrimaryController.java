@@ -18,6 +18,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -89,20 +91,11 @@ public class PrimaryController implements Initializable{
 	}
 
 	public void about() {
-		TextFlow textFlow = new TextFlow();
-		textFlow.setLayoutX(40);
-		textFlow.setLayoutY(40);
-		Text text = new Text("Matěj Bucek V4A");
-		text.setFill(Color.BLACK);
-		text.setFont(Font.font("Arial", FontPosture.REGULAR, 14));
-		textFlow.getChildren().addAll(text);
-
-		Group group = new Group(textFlow);
-		Scene scene = new Scene(group, 500, 150, Color.WHITE);
-		var stage = new Stage();
-		stage.setTitle("About me");
-		stage.setScene(scene);
-		stage.show();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("About");
+		alert.setHeaderText(null);
+		alert.setContentText("Matěj Bucek V4A");
+		alert.showAndWait();
 	}
 
 	public void generateImage() {
@@ -124,7 +117,6 @@ public class PrimaryController implements Initializable{
 		output.createNewFile();
 
 		BufferedImage buffImg = SwingFXUtils.fromFXImage(image.getImage(), null);
-
 		ImageIO.write(buffImg, ImageUtils.getFileExtention(output.getName()), output);
 	}
 }
