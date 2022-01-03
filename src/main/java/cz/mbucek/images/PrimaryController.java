@@ -69,6 +69,7 @@ public class PrimaryController implements Initializable{
 		    image.setImage((originalImg.isSelected())? originalImage : modifiedImage);
 		}));
 		
+		//Radši tuto část kódu neřešte :)
 		var methods = Filters.class.getMethods();
 		Stream.of(methods).filter(m -> m.getAnnotation(FilterName.class) != null).forEach(m -> {
 			var item = new MenuItem(m.getAnnotation(FilterName.class).value());
@@ -139,7 +140,7 @@ public class PrimaryController implements Initializable{
 	
 	private void applyFilter(Filter filter) {
 		originalImage = image.getImage();
-		if(image == null) return;
+		if(image.getImage() == null) return;
 		modifiedImage = SwingFXUtils.toFXImage(Filters.applyFilter(filter, SwingFXUtils.fromFXImage(image.getImage(), null)), null);
 		modifiedImg.setSelected(true);
 	}
