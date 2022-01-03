@@ -14,8 +14,6 @@ import java.awt.image.BufferedImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -26,12 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class PrimaryController implements Initializable{
 
@@ -70,24 +64,25 @@ public class PrimaryController implements Initializable{
 	public void chooseFile() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(App.mainStage);
-		file = selectedFile;
-		Image img = new Image(selectedFile.toURI().toString());
-		image.setImage(img);
-		image.setFitWidth(imageViewPane.getWidth() * 0.7);
-		image.setFitHeight(imageViewPane.getHeight() * 0.7);
-
-		imageViewPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+		if(selectedFile != null) {
+			file = selectedFile;
+			Image img = new Image(selectedFile.toURI().toString());
+			image.setImage(img);
 			image.setFitWidth(imageViewPane.getWidth() * 0.7);
-		});
-
-		imageViewPane.widthProperty().addListener((obs, oldVal, newVal) -> {
 			image.setFitHeight(imageViewPane.getHeight() * 0.7);
-		});
-
-		originalImg.setDisable(false);
-		modifiedImg.setDisable(false);
-		originalImg.setSelected(true);
-
+			
+			imageViewPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+				image.setFitWidth(imageViewPane.getWidth() * 0.7);
+			});
+			
+			imageViewPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+				image.setFitHeight(imageViewPane.getHeight() * 0.7);
+			});
+			
+			originalImg.setDisable(false);
+			modifiedImg.setDisable(false);
+			originalImg.setSelected(true);
+		}
 	}
 
 	public void about() {
@@ -113,10 +108,13 @@ public class PrimaryController implements Initializable{
 
 	public void save() throws IOException {
 		FileChooser fileChooser = new FileChooser();
+		fileChooser.setSelectedExtensionFilter(new ExtensionFilter("Images", "*.jpg", "*.png", "*.bmp"));
 		File output = fileChooser.showSaveDialog(App.mainStage);
-		output.createNewFile();
-
-		BufferedImage buffImg = SwingFXUtils.fromFXImage(image.getImage(), null);
-		ImageIO.write(buffImg, ImageUtils.getFileExtention(output.getName()), output);
+		if(output != null) {
+			output.createNewFile();
+			
+			BufferedImage buffImg = SwingFXUtils.fromFXImage(image.getImage(), null);
+			ImageIO.write(buffImg, ImageUtils.getFileExtention(output.getName()), output);
+		}
 	}
 }
